@@ -1,34 +1,31 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component,inject,OnInit } from "@angular/core";
+import { MemberServic } from "../../member-servic";
 
-import { Memberspage } from './memberspage';
-import { Component, OnInit } from '@angular/core';
 @Component({
-  selector:'app-members-page',
-  imports:[],
-  templateUrl:'./memberspage.html',
-  styleUrl:'./members-page.scss',
+selector:'app-members-page',
+imports:[],
+templateUrl:'./members-page.html',
+styleUrl:'./members-page.sccs',
+
 })
-export class Memberspage implements OnInit{
-  ngOnInit(): void {
-    this.dataRefresh();
-  }
+export class memberspage implements OnInit{
+ngOnInit(): void {
+  this.dataRefresh();
 }
-describe('Memberspage', () => {
-  let component: Memberspage;
-  let fixture: ComponentFixture<Memberspage>;
+data:MemberItem[]=[];
+membersService=inject(MemberServic);
+dataRefresh(){
+  this.data=this.membersService.list();
+}
+add(){
+  this.membersService.add({
+    id:4, name: 'آزمایش',telephone:1234,
+  })
+}
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Memberspage]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(Memberspage);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+}
+export interface MemberItem{
+  id:number;
+  name: string;
+  telephone?:number;
+}

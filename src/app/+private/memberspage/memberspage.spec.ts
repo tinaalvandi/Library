@@ -1,11 +1,11 @@
 import { Component,inject,OnInit } from "@angular/core";
-import { MemberServic } from "../../member-servic";
+import { MembersService } from "./memberspage";
 
 @Component({
 selector:'app-members-page',
 imports:[],
-templateUrl:'./members-page.html',
-styleUrl:'./members-page.sccs',
+templateUrl:'./memberspage.html',
+styleUrl:'./memberspage.scss',
 
 })
 export class memberspage implements OnInit{
@@ -13,7 +13,7 @@ ngOnInit(): void {
   this.dataRefresh();
 }
 data:MemberItem[]=[];
-membersService=inject(MemberServic);
+membersService=inject(MembersService);
 dataRefresh(){
   this.data=this.membersService.list();
 }

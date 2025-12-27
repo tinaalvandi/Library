@@ -2,7 +2,6 @@ import { Component,inject,OnInit } from "@angular/core";
 import { MembersService } from "./memberspage";
 
 @Component({
-selector:'app-members-page',
 imports:[],
 templateUrl:'./memberspage.html',
 styleUrl:'./memberspage.scss',

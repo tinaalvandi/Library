@@ -10,44 +10,60 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './bookpage.scss',
 })
 export class Bookpage implements OnInit {
-save() {
-   this.booksService.add(this.item);
-      this.dataRefresh();
-      this.state='list';
-     
-
-}
-  ngOnInit(): void {
-   this.dataRefresh();
+  save() {
+    if (this.state == 'add') {
+      this.booksService.add(this.item);
+    }
+    else if (this.state == 'edit') {
+      this.booksService.edit(this.item);
+    }
+     else if (this.state == 'remove') {
+      this.booksService.remove(this.item);
+    }
+    this.dataRefresh();
+    this.state = 'list';
   }
-  data:BookItem[]=[];
-  item:BookItem={
-    id:0,
-    title:'',
-    writer:'',
-    price:0,
-    publisher:''
+  ngOnInit(): void {
+    this.dataRefresh();
+  }
+  data: BookItem[] = [];
+  item: BookItem = {
+    title: '',
+    writer: '',
+    publisher: ''
   };
- booksService=inject(BooksService);
- state:string='list';
- dataRefresh(){
-this.data=this.booksService.list();
- }
-    add() {
-      this.state='add';
-     
+  booksService = inject(BooksService);
+  state: string = 'list';
+  dataRefresh() {
+    this.data = this.booksService.list();
+  }
+  add() {
+    this.state = 'add';
+    this.item = {
+      title: '',
+      writer: '',
+      publisher: ''
+    };
 
-      
-    }
-    cancel(){
-      this.state='list';
-    }
+
+  }
+  edit(book: BookItem) {
+    this.item = { ...book };
+    this.state = 'edit';
+  }
+remove(book:BookItem){
+   this.item = { ...book };
+   this.state='remove';
+}
+  cancel() {
+    this.state = 'list';
+  }
 }
 
 export interface BookItem {
-  id: number;
+  id?: number;
   title: string;
   writer: string;
   publisher: string;
-  price: number;
+  price?: number;
 }

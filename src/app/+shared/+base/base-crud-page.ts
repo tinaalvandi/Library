@@ -21,11 +21,10 @@ export class baseCrudpage<T extends thing> {
     // }
     data: T[] = [];
     item!: T;
-
     dataService! : baseservice<T>;
     state: string = 'list';
     dataRefresh() {
-        this.data = this.dataService.list();
+     this.data = this.dataService.list();
     }
     add() {
         this.state = 'add';

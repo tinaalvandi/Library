@@ -6,6 +6,32 @@
     border: none;
     margin: 0.1em;
 }
+.add{
+    background-color: rgb(34, 133, 255);
+    color: white;
+    padding: 0.2em 0.5em;
+    border-radius: 0.3em;
+    border: none;
+    margin: 0.1em;
+}
+.edit{
+    background-color: rgb(255, 144, 39);
+    color: white;
+    padding: 0.2em 0.5em;
+    border-radius: 0.3em;
+    border: none;
+    margin: 0.1em;
+}
+
+.remove{
+  background-color: rgb(241, 18, 18);
+    color: white;
+    padding: 0.2em 0.5em;
+    border-radius: 0.3em;
+    border: none;
+    margin: 0.1em;
+}
+
 table{
     width: 100%;
     border-collapse: collapse;

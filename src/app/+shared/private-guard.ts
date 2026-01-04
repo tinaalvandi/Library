@@ -12,5 +12,5 @@ export const privateGuard: CanActivateFn = (route, state) => {
   }
   const router=inject(Router);
   router.navigateByUrl('/login');
-  return true;
+  return false;
 };

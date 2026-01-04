@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BooksService } from './books-service';
 import { FormsModule } from '@angular/forms';
+import { thing } from '../../+shared/+base/base-thing';
+import { baseCrudpage } from '../../+shared/+base/base-crud-page';
 
 @Component({
   selector: 'app-bookpage',
@@ -9,60 +11,23 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './bookpage.html',
   styleUrl: './bookpage.scss',
 })
-export class Bookpage implements OnInit {
-  save() {
-    if (this.state == 'add') {
-      this.booksService.add(this.item);
-    }
-    else if (this.state == 'edit') {
-      this.booksService.edit(this.item);
-    }
-     else if (this.state == 'remove') {
-      this.booksService.remove(this.item);
-    }
-    this.dataRefresh();
-    this.state = 'list';
-  }
+export class Bookpage extends baseCrudpage<BookItem> implements OnInit {
+
   ngOnInit(): void {
     this.dataRefresh();
   }
-  data: BookItem[] = [];
-  item: BookItem = {
-    title: '',
-    writer: '',
-    publisher: ''
-  };
-  booksService = inject(BooksService);
-  state: string = 'list';
-  dataRefresh() {
-    this.data = this.booksService.list();
+  override dataService = inject(BooksService);
+  override addPrepair(): void {
+    this.item={
+      title:'',
+      publisher:'',
+      writer:'',
+    }
   }
-  add() {
-    this.state = 'add';
-    this.item = {
-      title: '',
-      writer: '',
-      publisher: ''
-    };
+   }
 
-
-  }
-  edit(book: BookItem) {
-    this.item = { ...book };
-    this.state = 'edit';
-  }
-remove(book:BookItem){
-   this.item = { ...book };
-   this.state='remove';
-}
-  cancel() {
-    this.state = 'list';
-  }
-}
-
-export interface BookItem {
-  id?: number;
-  title: string;
+export interface BookItem extends thing {
+   title: string;
   writer: string;
   publisher: string;
   price?: number;

@@ -1,21 +1,32 @@
-import { Injectable } from '@angular/core';
-import { MemberItem } from './memberspage.spec';
+import { Inject, inject, Injectable, OnInit } from '@angular/core';
+import {memberspage  } from './memberspage.spec';
+import { thing } from '../../+shared/+base/base-thing';
+import { baseCrudpage } from '../../+shared/+base/base-crud-page';
+import { baseservice } from '../../+shared/+base/base-service';
+
 
 @Injectable({
   providedIn: 'root',
 })
-export class MembersService {
-  private data: MemberItem[] = [
-    { id: 1, name: 'تینا الوندی', telephone:435789 },
-    { id: 2, name: ' زهرا نظری', telephone:97542, },
-    { id: 3, name: ' عسل مرادی منظر',telephone:97521245,},
-  ];
-  list() {
-    return [...this.data];
+export class MembersService extends baseCrudpage<MemberItem> implements OnInit {
+  list(): import("./memberspage.spec").MemberItem[] {
+    throw new Error("Method not implemented.");
   }
-  add(item: MemberItem) {
-    this.data.push(item);
+  ngOnInit(): void {
+   this.dataRefresh();
   }
-
+override dataService=Inject(MembersService);
+override addPrepair(): void {
+  this.item={
+    fullname:'',
+    address:'',
+    mobile:'',
+  }
+}
 }
 
+export interface MemberItem extends thing {
+  fullname: string;
+  mobile: string;
+  address: string;
+  }

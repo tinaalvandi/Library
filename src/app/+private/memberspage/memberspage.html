@@ -1,4 +1,4 @@
-
+@if (state=='list') {
 
 
 <button (click)="add()" class="primary">افزودن</button>
@@ -6,8 +6,9 @@
     <thead>
         <tr>
             <th>شناسه</th>
-            <th>نام</th>
-            <th>تلفن</th>
+            <th>نام و نام خانوادگی</th>
+            <th>آدرس </th>
+            <th>موبایل</th>
             <th></th>
         </tr>
     </thead>
@@ -15,15 +16,41 @@
         @for (item of data; track $index) {
         <tr>
              <td>{{item.id}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.telephone}}</td>
-            <td>
-                <button class="primary">ویرایش</button>
-                <button class="primary">حذف</button>
+            <td>{{item.fullname}}</td>
+            <td>{{item.address}}</td>
+            <td>{{item.mobile}}</td>
+             <td>
+                <button (click)="edit(item)" class="primary">ویرایش</button>
+                <button (click)="remove(item)" class="primary">حذف</button>
             </td>
         </tr>
 
         }
     </tbody>
-</table>
+</table>}
+@else {
+    @if (state=='remove') {
+    <div class="alert">
+        آیا از حذف این عضو اطمینان دارید؟
+    </div>
+    }
 
+<form  (ngSubmit)="save()">
+       <div>
+        <input [disabled]="state=='edit'||state=='remove'" [class.ghogl]="state=='edit'" [(ngModel)]="item.id" id="id" name="id" type="number" placeholder="شناسه کتاب">
+    </div>
+    <div>
+        <input [disabled]="state=='remove'" [(ngModel)]="item.fullname" id="fullname" name="fullname" type="text" placeholder=" نام و نام خانوادگی">
+    </div>
+    <div>
+        <input [disabled]="state=='remove'" [(ngModel)]="item.address" id="address" name="address" type="text" placeholder="آدرس">
+    </div>
+    <div>
+        <input [disabled]="state=='remove'" [(ngModel)]="item.mobile" id="mobile" name="mobile" type="text" placeholder=" موبایل">
+    </div>
+       <div>
+        <button class="primary" type="submit">تایید</button>
+        <button (click)="cancel()" class="primary"  type="button">انصراف</button>
+    </div>
+   </form>
+}
